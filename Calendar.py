@@ -171,10 +171,10 @@ def generate_names_dates(num = 100, n_meeting = 10):
         hour_begin = random.randint(0, 22)
         hour_begin += 1
         hour_end = random.randint(hour_begin, 23)
-        minute_begin = random.randint(0, 59)
+        minute_begin = random.randint(0, 58)
         minute_end = random.randint(0, 59)
         if hour_begin == hour_end:
-            minute_end = random.randint(minute_begin, 59)
+            minute_end = random.randint(minute_begin+1, 59)
 
         calendar.add_new_worker(new_name, quality, department, work_time=f"{hour_begin}:{minute_begin}-{hour_end}:{minute_end}")
         meeting_amm = random.randint(1, n_meeting)
@@ -196,7 +196,10 @@ def generate_names_dates(num = 100, n_meeting = 10):
         print('Work time for ', ' '.join(name), calendar.get_work_time(name[0], name[1], name[2]))
         print('Free time for ', ' '.join(name), calendar.get_free_time(name[0], name[1], name[2]))
 
-    print('All free time: ', calendar.get_common_free_time(names))
+    part_of_names = random.randint(1, num)
+    part_workers = random.sample(names, part_of_names)
+    print('Random workers are: ', part_workers)
+    print('All free time: ', calendar.get_common_free_time(part_workers))
 
 if __name__ == '__main__':
     calendar = Calendar()
@@ -219,3 +222,4 @@ if __name__ == '__main__':
     print("All free time: ", calendar.get_common_free_time(workers))
     print()
     generate_names_dates(num = 3, n_meeting = 2)
+
